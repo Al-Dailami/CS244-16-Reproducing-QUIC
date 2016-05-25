@@ -19,6 +19,8 @@ LOSS_RATES=( 0.0 0.005 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.1
 SCRIPTS_DIR=~/CS244-16-Reproducing-QUIC/experiment_scripts
 for BANDWIDTH in "${BANDWIDTHS[@]}"
 do 
+    echo "Running with bandwidth $BANDWIDTH"
+
     cd ~/chromium/quic-data/www.example.org/
     python -m SimpleHTTPServer &
     sleep 5s # give enough time for server to set up
@@ -30,6 +32,7 @@ do
 
     for LOSS in "${LOSS_RATES[@]}"
     do
+	echo "Running TCP client with loss rate $LOSS"
 	$MM_CMD $LOSS wget http://$HOST_IP:8000 &> $TMP_DIR/tcp_$LOSS.out
     done
 
@@ -52,6 +55,7 @@ do
     # TODO: get IP better
     for LOSS in "${LOSS_RATES[@]}"
     do
+	echo "Running QUIC client with loss rate $LOSS"
 	$MM_CMD $LOSS -- time -v -o $TMP_DIR/quic_$LOSS.out ./out/Debug/quic_client  --host=100.64.0.1 --port=6121 https://www.example.org/index.html &> /dev/null
     done
 
