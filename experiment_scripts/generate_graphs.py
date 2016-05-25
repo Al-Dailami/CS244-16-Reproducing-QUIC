@@ -52,12 +52,12 @@ def convert_secs_to_mbps(file_size, secs):
     return (file_size/secs)/1000000
 
 def main():
-    assert len(sys.argv) == 4
+    assert len(sys.argv) == 5
 
     tcp_loss_to_tput = extract_data(sys.argv[1], "tcp", TCP_REGEX)
     quic_loss_to_tput = extract_quic_data(sys.argv[2], "quic", QUIC_REGEX, int(sys.argv[3]))        
     plt.scatter(tcp_loss_to_tput.keys(), tcp_loss_to_tput.values(), color='red')
     plt.scatter(quic_loss_to_tput.keys(), quic_loss_to_tput.values(), color='green')
-    plt.show()
+    plt.savefig(sys.argv[4] + ".png")
 
 if __name__ == "__main__": main()
