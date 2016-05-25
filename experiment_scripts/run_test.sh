@@ -19,7 +19,7 @@ HOST_IP=$(echo `hostname -I`)
 
 LOSS_RATES=( 0.0 0.005 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 )
 
-TRACE_DIR=~/experiment_scripts/traces
+TRACE_DIR=~/CS244-16-Reproducing-QUIC/traces
 MM_CMD="mm-link $TRACE_DIR/5mb.trace $TRACE_DIR/5mb.trace mm-loss downlink"
 
 for LOSS in "${LOSS_RATES[@]}"
