@@ -17,10 +17,10 @@ sleep 5s # give enough time for server to set up
 
 HOST_IP=$(echo `hostname -I`)
 
-LOSS_RATES=( 0.0 0.005 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 )
+LOSS_RATES=( 0.0 0.005 0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08 0.09 0.1 0.11 0.12 0.13 0.14 0.15 0.16 0.17 )
 
 TRACE_DIR=~/CS244-16-Reproducing-QUIC/traces
-MM_CMD="mm-link $TRACE_DIR/5mb.trace $TRACE_DIR/5mb.trace mm-loss downlink"
+MM_CMD="mm-link $TRACE_DIR/1mb.trace $TRACE_DIR/1mb.trace mm-loss downlink"
 
 for LOSS in "${LOSS_RATES[@]}"
 do
@@ -53,3 +53,8 @@ grep -i "elapsed" $TMP_DIR/quic* > $TMP_DIR/quic_loss_aggregate.txt
 
 pkill -f quic &> /dev/null
 cd ~
+
+
+FILE_SIZE=`wc -c ~/chromium/quic-data/www.example.org/index.html  | head -n1 | cut -d " " -f1`
+python ~/CS244-16-Reproducing-QUIC/experiment_scripts/generate_graphs.py $TMP_DIR/tcp_loss_aggregate.txt $TMP_DIR/quic_loss_aggregate.txt $FILE_SIZE
+
