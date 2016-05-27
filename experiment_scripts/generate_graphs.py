@@ -17,7 +17,6 @@ def extract_data(filename, protocol, regex, file_size):
         match = re.search(regex, line)
         total_time = 60*int(match.group("min")) + float(match.group("secs"))
         loss_to_tput[float(match.group("loss"))] = convert_secs_to_mbps(file_size, total_time)
-    print loss_to_tput
     return loss_to_tput
 
 def convert_secs_to_mbps(file_size, secs):
@@ -37,6 +36,8 @@ def main():
     plt.ylim(ymin=0)
     plt.xlim(xmin=-0.01)
     plt.legend()
-    plt.savefig(sys.argv[4] + "mb-" + sys.argv[5] + "ms.png")
+    graph_title = sys.argv[4] + "mb-" + sys.argv[5] + "ms.png"
+    plt.savefig(graph_title)
+    print "Check graphs folder for graph: %s" % graph_title
 
 if __name__ == "__main__": main()
