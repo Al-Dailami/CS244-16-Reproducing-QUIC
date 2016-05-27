@@ -16,7 +16,7 @@ def extract_data(filename, protocol, regex, file_size):
     for line in f:
         match = re.search(regex, line)
         total_time = 60*int(match.group("min")) + float(match.group("secs"))
-        loss_to_tput[float(match.group("loss"))] = convert_secs_to_mbps(file_size, total_time)
+        loss_to_tput[100*float(match.group("loss"))] = convert_secs_to_mbps(file_size, total_time)
     return loss_to_tput
 
 def convert_secs_to_mbps(file_size, secs):
