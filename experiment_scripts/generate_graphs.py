@@ -34,7 +34,7 @@ def main():
     plt.scatter(tcp_loss_to_tput.keys(), tcp_loss_to_tput.values(), color='red', label="TCP")
     plt.scatter(quic_loss_to_tput.keys(), quic_loss_to_tput.values(), color='blue', label="QUIC")
     plt.ylim(ymin=0)
-    plt.xlim(xmin=-0.01)
+    plt.xlim(xmin=-1.0)
     plt.legend(fontsize=20)
     graph_title = sys.argv[4] + "mb-" + sys.argv[5] + "ms.png"
     plt.savefig(graph_title)
