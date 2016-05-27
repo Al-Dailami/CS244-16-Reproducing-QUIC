@@ -27,23 +27,23 @@ LOSS_RATES=( 0.0 0.1 )
 for DELAY in "${DELAYS[@]}"
 do
 
-echo "Running with delay $DELAY"
+echo "----------Running with delay $DELAY----------"
 
 for BANDWIDTH in "${BANDWIDTHS[@]}"
 do 
-    echo "Running with bandwidth $BANDWIDTH"
+    echo -e "Running with bandwidth $BANDWIDTH"
 
     cd ~/https-server
     python simple-https-server.py &> /dev/null &
     sleep 5s # give enough time for server to set up
-    echo "Python HTTPS server running."
+    echo -e "Python HTTPS server running."
 
     HOST_IP=$(echo `hostname -I`)
     MM_CMD="mm-link $TRACE_DIR/${BANDWIDTH}mb.trace $TRACE_DIR/${BANDWIDTH}mb.trace mm-delay $DELAY mm-loss downlink"
 
     for LOSS in "${LOSS_RATES[@]}"
     do
-	echo "Running TCP client with loss rate $LOSS"
+	echo -e "\tRunning TCP client with loss rate $LOSS"
 	$MM_CMD $LOSS -- time -v -o $TMP_DIR/tcp_${DELAY}_${BANDWIDTH}_${LOSS}.out wget --no-check-certificate https://${HOST_IP}:4443 &> /dev/null
     done
 
@@ -60,11 +60,11 @@ do
 	--certificate_file=net/tools/quic/certs/out/leaf_cert.pem \
 	--key_file=net/tools/quic/certs/out/leaf_cert.pkcs8 &> /dev/null &
     sleep 5s # give enough time for server to set up
-    echo "QUIC server running."
+    echo -e "\nQUIC server running."
 
     for LOSS in "${LOSS_RATES[@]}"
     do
-	echo "Running QUIC client with loss rate $LOSS"
+	echo -e "\tRunning QUIC client with loss rate $LOSS"
 	$MM_CMD $LOSS -- time -v -o $TMP_DIR/quic_${DELAY}_${BANDWIDTH}_${LOSS}.out ./out/Debug/quic_client  --host=100.64.0.1 --port=6121 https://www.example.org/index.html &> /dev/null
     done
 
