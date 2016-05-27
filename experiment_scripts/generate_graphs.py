@@ -28,14 +28,14 @@ def main():
     tcp_loss_to_tput = extract_data(sys.argv[1], "tcp", REGEX, int(sys.argv[3]))
     quic_loss_to_tput = extract_data(sys.argv[2], "quic", REGEX, int(sys.argv[3]))
 
-    plt.title("%s Mbps Bandwidth with %sms Delay" % (sys.argv[4], sys.argv[5]))
-    plt.xlabel("Packet loss rate (%)")
-    plt.ylabel("Goodput (Mbps)")
+    plt.title("%s Mbps Bandwidth with %sms Delay" % (sys.argv[4], sys.argv[5]), size=18)
+    plt.xlabel("Packet loss rate (%)", size=20)
+    plt.ylabel("Goodput (Mbps)", size=20)
     plt.scatter(tcp_loss_to_tput.keys(), tcp_loss_to_tput.values(), color='red', label="TCP")
     plt.scatter(quic_loss_to_tput.keys(), quic_loss_to_tput.values(), color='blue', label="QUIC")
     plt.ylim(ymin=0)
     plt.xlim(xmin=-0.01)
-    plt.legend()
+    plt.legend(fontsize=20)
     graph_title = sys.argv[4] + "mb-" + sys.argv[5] + "ms.png"
     plt.savefig(graph_title)
     print "Check graphs folder for graph: %s" % graph_title
