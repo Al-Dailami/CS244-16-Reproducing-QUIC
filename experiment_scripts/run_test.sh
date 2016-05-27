@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Part -1: Make sure hardware virtualization is enabled.
+echo "------WARNING------"
+echo "If you haven't enabled hardware virtualization and given this VM at least two cores to work on, stop the script now and fix that!"
+sleep 3s
+
 # Part 0: Get Mahimahi set up.
 sudo sysctl -w net.ipv4.ip_forward=1
 
